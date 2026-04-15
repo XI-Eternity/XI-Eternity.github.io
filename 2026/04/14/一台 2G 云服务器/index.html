@@ -9,7 +9,7 @@
   
   <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_a0oqhord1y';window.REIMU_CONFIG.clipboard_tips = {"success":{"zh-CN":"复制成功 (*^▽^*)"},"fail":{"zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'https://xi-eternity.github.io';</script>
   <title>
-    标签: IoT | XI-Eternity
+    一台 2G 云服务器 | XI-Eternity
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic|Noto Serif SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic|Noto Serif SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media='all'">
@@ -17,15 +17,23 @@
     
 <link rel="stylesheet" href="/css/loader.css">
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="XI-Eternity">
-<meta property="og:url" content="https://xi-eternity.github.io/tags/IoT/index.html">
+    <meta name="description" content="最近这段时间，我一直在折腾一个基于 ESP32-S3 的家庭 AI 设备项目。 一开始的设想其实很简单：设备端负责采集环境数据和语音数据，云端负责存储和提供接口，电脑端则用来图形化查看数据。听起来像是一个典型的“小型 IoT 系统”，功能上也不算特别复杂。 但真正做下来之后，我越来越强烈地感受到，这类项目最难的地方往往不是“功能能不能实现”，而是“整套系统能不能稳定跑起来”。 尤其当服务部署在一台">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一台 2G 云服务器">
+<meta property="og:url" content="https://xi-eternity.github.io/2026/04/14/%E4%B8%80%E5%8F%B0%202G%20%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/index.html">
 <meta property="og:site_name" content="XI-Eternity">
+<meta property="og:description" content="最近这段时间，我一直在折腾一个基于 ESP32-S3 的家庭 AI 设备项目。 一开始的设想其实很简单：设备端负责采集环境数据和语音数据，云端负责存储和提供接口，电脑端则用来图形化查看数据。听起来像是一个典型的“小型 IoT 系统”，功能上也不算特别复杂。 但真正做下来之后，我越来越强烈地感受到，这类项目最难的地方往往不是“功能能不能实现”，而是“整套系统能不能稳定跑起来”。 尤其当服务部署在一台">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://xi-eternity.github.io/images/banner.webp">
+<meta property="article:published_time" content="2026-04-14T07:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-15T09:20:09.066Z">
 <meta property="article:author" content="Xize">
+<meta property="article:tag" content="ESP32-S3">
+<meta property="article:tag" content="IoT">
+<meta property="article:tag" content="Flask">
+<meta property="article:tag" content="Redis">
+<meta property="article:tag" content="TimescaleDB">
+<meta property="article:tag" content="云服务器">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://xi-eternity.github.io/images/banner.webp">
     <link rel="alternate" href="/atom.xml" title="XI-Eternity" type="application/atom+xml">
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -122,16 +130,15 @@
   </nav>
 </div>
 <header id="header" aria-label="Site header">
-      <picture>
-      </picture>
-        <img  fetchpriority="high" src="/images/banner.webp" alt="">
+        <picture>
+        </picture>
+          <img  fetchpriority="high" src="/images/banner.webp" alt="一台 2G 云服务器">
   <div id="header-outer">
     <div id="header-title">
           <span id="logo">
-            <h1 data-aos="slide-up">标签</h1>
+            <h1 data-aos="slide-up">一台 2G 云服务器</h1>
           </span>
         <h2 id="subtitle-wrap" data-aos="slide-down">
-              <span id="subtitle">IoT</span>
         </h2>
     </div>
   </div>
@@ -139,10 +146,15 @@
 
         <div id="content" aria-label="Page content"  class="sidebar-right" >
           <aside id="sidebar" aria-label="Sidebar">
-  <div class="sidebar-wrapper-container ">
+  <div class="sidebar-wrapper-container sticky">
   <div class="sidebar-wrapper">
     <div class="sidebar-wrap" data-aos="fade-up">
-        <div class="sidebar-author">
+          <div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
+<div class="sidebar-toc-wrapper toc-div-class" >
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E7%9B%AE%E6%A0%87%EF%BC%9A%E8%AE%BE%E5%A4%87%E9%87%87%E9%9B%86%EF%BC%8C%E4%BA%91%E7%AB%AF%E5%AD%98%E5%82%A8%EF%BC%8C%E6%9C%AC%E5%9C%B0%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">项目目标：设备采集，云端存储，本地可视化</span></a></li></ol>
+</div>
+</div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Xize" class="lazyload">
   <div class="sidebar-author-name">Xize</div>
   <div class="sidebar-description"></div>
@@ -193,7 +205,11 @@
         <div class="sidebar-menu-link">友链</div>
       </div>
 </div>
-
+</div>
+          <div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div>
     </div>
   </div>
   <div class="sidebar-widget">
@@ -201,58 +217,58 @@
   </div>
 </aside>
 
-          <section id="main" aria-label="Main content"><div class="archives-outer-wrap" data-aos="fade-up">
-    <div class="tag-wrap">
-    <div class="archives-tag-list-item" data-aos="zoom-in">
-      <a class="archives-tag-list-link" href="/tags/ESP32-S3/">ESP32-S3</a>
-    </div>
-    <div class="archives-tag-list-item" data-aos="zoom-in">
-      <a class="archives-tag-list-link" href="/tags/IoT/">IoT</a>
-    </div>
-    <div class="archives-tag-list-item" data-aos="zoom-in">
-      <a class="archives-tag-list-link" href="/tags/Flask/">Flask</a>
-    </div>
-    <div class="archives-tag-list-item" data-aos="zoom-in">
-      <a class="archives-tag-list-link" href="/tags/Redis/">Redis</a>
-    </div>
-    <div class="archives-tag-list-item" data-aos="zoom-in">
-      <a class="archives-tag-list-link" href="/tags/TimescaleDB/">TimescaleDB</a>
-    </div>
-    <div class="archives-tag-list-item" data-aos="zoom-in">
-      <a class="archives-tag-list-link" href="/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/">云服务器</a>
-    </div>
+          <section id="main" aria-label="Main content"><article id="post-一台 2G 云服务器" class="h-entry article" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <span class="article-date-link icon-calendar" data-aos="zoom-in">
+    <time datetime="2026-04-14T07:00:00.000Z" itemprop="datePublished">2026-04-14</time>
+    <time style="display: none;" id="post-update-time">2026-04-15</time>
+  </span>
 </div>
-<div class="category-wrap">
-    <div class="archives-category-list-item" data-aos="zoom-in">
-      <a class="archives-category-list-link" href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/">后端开发</a>
+
     </div>
-</div>
-        <section class="archives-wrap" data-aos="fade-up">
-          <div class="archive-year-wrap">
-            <a href="/archives/2026" class="archive-year">2026</a>
-          </div>
-          <ul>
-            <li class="archive-article">
-  <div class="archive-article-date">
-    <span>
-      <time class="dt-published" datetime="2026-04-14T07:00:00.000Z" itemprop="datePublished">04-14</time>
-    </span>
-  </div>
-    <a class="archive-article-title" href="/2026/04/14/%E4%B8%80%E5%8F%B0%202G%20%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E5%A6%82%E4%BD%95%E6%9B%B4%E7%A8%B3%E5%9C%B0%E8%B7%91%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%20API/">一台 2G 云服务器，如何更稳地跑数据库和 API</a>
-</li>
+    
+    <div class="hr-line"></div>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+        <p>最近这段时间，我一直在折腾一个基于 <code>ESP32-S3</code> 的家庭 AI 设备项目。</p>
+<p>一开始的设想其实很简单：设备端负责采集环境数据和语音数据，云端负责存储和提供接口，电脑端则用来图形化查看数据。听起来像是一个典型的“小型 IoT 系统”，功能上也不算特别复杂。</p>
+<p>但真正做下来之后，我越来越强烈地感受到，这类项目最难的地方往往不是“功能能不能实现”，而是“整套系统能不能稳定跑起来”。</p>
+<p>尤其当服务部署在一台只有 <code>2G</code> 内存的小云服务器上时，很多在本地看起来完全合理的方案，到了线上就可能变得脆弱。你会发现，真正拉开差距的，往往不是代码本身，而是架构拆分、服务边界、资源分配和部署方式这些更底层的选择。</p>
+<p>这篇文章就想把这次实践完整整理一下：从 <code>ESP32-S3</code> 的硬件连接，到设备侧和云端的分层设计，再到数据库可视化查看方式，以及一次凌晨 OOM 之后我对整套架构的调整。过程不算“高大上”，但足够真实，也很适合正在做个人 IoT &#x2F; 家庭 AI 项目的人参考。</p>
+<hr>
+<h2 id="项目目标：设备采集，云端存储，本地可视化"><a href="#项目目标：设备采集，云端存储，本地可视化" class="headerlink" title="项目目标：设备采集，云端存储，本地可视化"></a>项目目标：设备采集，云端存储，本地可视化</h2><p>这个项目的目标可以概括成三件事：</p>
+<ul>
+<li><code>ESP32-S3</code> 负责采集环境和音频数据</li>
+<li>服务端负责接收、缓存、入库，并提供 API</li>
+<li>本地电脑负责图形化查看数据库内容</li>
+</ul>
+<p>从一开始，我就希望这套方案尽量轻量，不依赖太重的云服务，也不让设备直接去连接数据库。因为嵌入式设备一旦和数据库耦合得太深，后面无论是改表结构、换缓存策略，还是做接口调整，维护成本都会迅速上升。</p>
+<p>所以最终，我还是把设备、API、缓存、数据库这几层尽量拆开了。事实证明，这个决定是对的。</p>
+<hr>
 
-            <li class="archive-article">
-  <div class="archive-article-date">
-    <span>
-      <time class="dt-published" datetime="2026-04-14T07:00:00.000Z" itemprop="datePublished">04-14</time>
-    </span>
-  </div>
-    <a class="archive-article-title" href="/2026/04/14/%E4%B8%80%E5%8F%B0%202G%20%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/">一台 2G 云服务器</a>
-</li>
+    </div>
+    <footer class="article-footer">
+        <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/" title="后端开发" data-aos="zoom-in">后端开发</a>
 
-          </ul>
-        </section>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/ESP32-S3/" rel="tag" title="ESP32-S3">ESP32-S3</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/Flask/" rel="tag" title="Flask">Flask</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/IoT/" rel="tag" title="IoT">IoT</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag" title="Redis">Redis</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/TimescaleDB/" rel="tag" title="TimescaleDB">TimescaleDB</a></li><li class="article-tag-list-item" data-aos="zoom-in"><a class="article-tag-list-link" href="/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag" title="云服务器">云服务器</a></li></ul>
+
+    </footer>
   </div>
+    <nav id="article-nav" aria-label="Article navigation" data-aos="fade-up">
+      <div class="article-nav-link-wrap left">
+            <img data-src="/images/banner.webp" data-sizes="auto" alt="一台 2G 云服务器，如何更稳地跑数据库和 API" class="lazyload">
+        <a href="/2026/04/14/%E4%B8%80%E5%8F%B0%202G%20%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E5%A6%82%E4%BD%95%E6%9B%B4%E7%A8%B3%E5%9C%B0%E8%B7%91%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%20API/" aria-label="前一篇: 一台 2G 云服务器，如何更稳地跑数据库和 API" title="前一篇: 一台 2G 云服务器，如何更稳地跑数据库和 API"></a>
+        <div class="article-nav-caption">前一篇</div>
+        <h3 class="article-nav-title">
+            一台 2G 云服务器，如何更稳地跑数据库和 API
+        </h3>
+      </div>
+  </nav>
+
+</article>
+
 
 </section>
         </div>
@@ -296,7 +312,12 @@
       </div>
       <nav id="mobile-nav" aria-label="Mobile navigation">
   <div class="sidebar-wrap">
-      <div class="sidebar-author">
+        <div class="sidebar-toc-sidebar"><h3 class="toc-title">文章目录</h3>
+<div class="sidebar-toc-wrapper toc-div-class" >
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E7%9B%AE%E6%A0%87%EF%BC%9A%E8%AE%BE%E5%A4%87%E9%87%87%E9%9B%86%EF%BC%8C%E4%BA%91%E7%AB%AF%E5%AD%98%E5%82%A8%EF%BC%8C%E6%9C%AC%E5%9C%B0%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">项目目标：设备采集，云端存储，本地可视化</span></a></li></ol>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
   <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="Xize" class="lazyload">
   <div class="sidebar-author-name">Xize</div>
   <div class="sidebar-description"></div>
@@ -347,8 +368,12 @@
         <div class="sidebar-menu-link">友链</div>
       </div>
 </div>
-
+</div>
   </div>
+      <div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
 </nav>
 
     </div>
@@ -406,6 +431,49 @@
 
 <div id="lazy-script">
   <div>
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "Xize",
+          title: "一台 2G 云服务器",
+          url: "https://xi-eternity.github.io/2026/04/14/%E4%B8%80%E5%8F%B0%202G%20%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/",
+          excerpt: "",
+          description: "",
+          stripContent: "最近这段时间，我一直在折腾一个基于 ESP32-S3 的家庭 AI 设备项目。 一开始的设想其实很简单：设备端负责采集环境数据和语音数据，云端负责存储和提供接口，电脑端则用来图形化查看数据。听起来像是一个典型的“小型 IoT 系统”，功能上也不算特别复杂。 但真正做下来之后，我越来越强烈地感受到，这类项目最难的地方往往不是“功能能不能实现”，而是“整套系统能不能稳定跑起来”。 尤其当服务部署在一台只有 2G 内存的小云服务器上时，很多在本地看起来完全合理的方案，到了线上就可能变得脆弱。你会发现，",
+          date: "Tue Apr 14 2026 15:00:00 GMT+0800",
+          updated: "Wed Apr 15 2026 17:20:09 GMT+0800",
+          cover: "/images/banner.webp",
+        };
+      </script>
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+      
+<script src="/js/tabs.js" data-pjax defer></script>
+
+      <script type="module" data-pjax>
+        (async () => {
+          const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+          const initPswp = (gallery, children) => {
+            if (_$$(`${gallery} ${children}`).length > 0) {
+              new PhotoSwipeLightbox({
+                gallery,
+                children,
+                pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+              }).init();
+            }
+          }
+          const pswp = () => {
+            initPswp('.article-entry', 'a.article-gallery-item');
+            initPswp('.article-gallery', 'a.article-gallery-item');
+          }
+          pswp();
+        })();
+      </script>
+        
+
+
   </div>
 </div>
 
